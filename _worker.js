@@ -10,7 +10,7 @@ import { connect } from 'cloudflare:sockets';
 let userID = '89b3cbba-e6ac-485a-9481-976a0415eab9';
 
 // https://www.nslookup.io/domains/cdn.xn--b6gac.eu.org/dns-records/
-// https://www.nslookup.io/domains/cdn-all.xn--b6gac.eu.org/dns-records/
+// https://www.nslookup.io/domains/cdn-all.xn--b6gac.eu.org/dns-records/ 
 const proxyIPs= ['cdn.xn--b6gac.eu.org', 'cdn-all.xn--b6gac.eu.org', 'edgetunnel.anycast.eu.org'];
 
 const defaultHttpPorts = ['80', '8080', '2052', '2082', '2086', '2095', '8880'];
@@ -72,7 +72,7 @@ export default {
                         let fragConfigs = await getFragmentConfigs(env, host, 'v2ray');
                         fragConfigs = fragConfigs.map(config => config.config);
 
-                        return new Response(`${JSON.stringify(fragConfigs, null, 4)}`, { status: 200 });
+                        return new Response(`${JSON.stringify(fragConfigs, null, 4)}`, { status: 200 }); 
 
                     case `/warpsub/${userID}`:
 
@@ -186,7 +186,7 @@ export default {
                         let passAuth = await Authenticate(request, env);
                         if (!passAuth) return new Response('Unauthorized!', { status: 401 });           
                         const newPwd = await request.text();
-                        const oldPwd = await env.bpb.get('pwd');
+                        const oldPwd = await env.bpb.get('pwd'); 
                         if (newPwd === oldPwd) return new Response('Please enter a new Password!', { status: 400 });
                         await env.bpb.put('pwd', newPwd);
 
@@ -199,11 +199,11 @@ export default {
                         });
 
                     default:
-                        // return new Response('Not found', { status: 404 });
+                        return new Response('Not found', { status: 404 }); 
                         url.hostname = 'www.speedtest.net';
                         url.protocol = 'https:';
                         request = new Request(url, request);
-                        return await fetch(request);
+                        return await fetch(request); 
                 }
             } else {
                 return await vlessOverWSHandler(request);
