@@ -16,7 +16,7 @@ const proxyIPs= ['cdn.xn--b6gac.eu.org', 'cdn-all.xn--b6gac.eu.org', 'edgetunnel
 const defaultHttpPorts = ['80', '8080', '2052', '2082', '2086', '2095', '8880'];
 const defaultHttpsPorts = ['443', '8443', '2053', '2083', '2087', '2096'];
 
-let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
+let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)]; 
 
 let dohURL = 'https://cloudflare-dns.com/dns-query';
 
@@ -62,7 +62,7 @@ export default {
 
                         if (client === 'sfa') {
                             const BestPingSFA = await getSingboxConfig(env, host);
-                            return new Response(`${JSON.stringify(BestPingSFA, null, 4)}`, { status: 200 });                            
+                            return new Response(`${JSON.stringify(BestPingSFA, null, 4)}`, { status: 200 });                             
                         }
                         const normalConfigs = await getNormalConfigs(env, host, client);
                         return new Response(normalConfigs, { status: 200 });                        
@@ -77,7 +77,7 @@ export default {
                     case `/warpsub/${userID}`:
 
                         const wowConfig = await getWarpConfigs(env, client);
-                        return new Response(`${JSON.stringify(wowConfig, null, 4)}`, { status: 200 });
+                        return new Response(`${JSON.stringify(wowConfig, null, 4)}`, { status: 200 }); 
 
                     case '/panel':
 
@@ -198,14 +198,14 @@ export default {
                             }
                         });
 
-                    default:
-                        // return new Response('Not found', { status: 404 });
+                    default: 
+                        return new Response('Not found', { status: 404 });  
                         url.hostname = 'www.speedtest.net';
                         url.protocol = 'https:';
-                        request = new Request(url, request);
-                        return await fetch(request);
+                        request = new Request(url, request); 
+                        return await fetch(request); 
                 }
-            } else {
+            } else { 
                 return await vlessOverWSHandler(request);
             }
         } catch (err) {
